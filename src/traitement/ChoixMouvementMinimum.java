@@ -14,11 +14,10 @@ public class ChoixMouvementMinimum implements ChoixAscenseur {
 				.getEtageCourant())
 				&& requete.getDirection().equals(Constante.KHaut())) {
 			return true;
+		// sinon si on descend 
 		} else if ((ascenseur.getRequetes().get(0).getEtageDeLaRequete() < ascenseur
 				.getEtageCourant())
-				&& requete.getDirection().equals(Constante.KBas()))// sinon si
-																	// on
-																	// descend
+				&& requete.getDirection().equals(Constante.KBas()))
 		{
 
 			return true;
@@ -36,40 +35,37 @@ public class ChoixMouvementMinimum implements ChoixAscenseur {
 				.getRequetes().iterator();
 		List<Ascenseur> listeAscenseursImmobiles = new ArrayList<Ascenseur>();
 
-		while (iterRequete.hasNext()) // Pour chaque requete externe
+		// Pour chaque requete externe
+		while (iterRequete.hasNext()) 
 		{
 			RequeteExterne requete = iterRequete.next();
 
-			for (Ascenseur ascenseur : Controleur.getInstance().getAscenseurs()) { // Pour
-																					// chaque
-																					// ascenseur
-				if (ascenseur.getRequetes().size() == 0) // Si l'ascenseur
-															// est immobile
+			// Pour chaque ascenseur
+			for (Ascenseur ascenseur : Controleur.getInstance().getAscenseurs()) { 
+				// Si l'ascenseur est immobile
+				if (ascenseur.getRequetes().size() == 0) 
 				{
-					// et si c'est un ascenseur immobile se trouvant deja a
-					// l'etage
+					// et si c'est un ascenseur immobile se trouvant deja a l'etage
 					if (ascenseur.getEtageCourant() == requete
 							.getEtageDeLaRequete()) {
-						ascenseur.ajouterRequete(requete); // on ajoute la
-															// requete
-						iterRequete.remove(); // On la supprime de la collection
-												// de requetes externes du
-												// controleur
+						// on ajoute la requete
+						ascenseur.ajouterRequete(requete); 
+						// On la supprime de la collection
+						// de requetes externes du controleur
+						iterRequete.remove(); 
 						break;
 					}
-					listeAscenseursImmobiles.add(ascenseur); // on le rajoute
-																// a la liste
-																// des
-																// ascenseurs
-																// immobiles
+					// on le rajoute a la liste des ascenseurs immobiles
+					listeAscenseursImmobiles.add(ascenseur); 
 				}
 
-				else if (SurLeTrajet(ascenseur, requete))// sinon si la requete
-															// est
-															// sur son trajet
+				// sinon si la requete est sur son trajet
+				else if (SurLeTrajet(ascenseur, requete))
 				{
-					ascenseur.ajouterRequete(requete); // on l'ajoute
-					iterRequete.remove(); // On la supprime de la collection
+					// on l'ajoute
+					ascenseur.ajouterRequete(requete); 
+					// On la supprime de la collection
+					iterRequete.remove(); 
 					break;
 				}
 
