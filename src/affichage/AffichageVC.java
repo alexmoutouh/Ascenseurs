@@ -7,6 +7,7 @@ import traitement.Controleur;
 
 public class AffichageVC extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 
 	private PanneauVC vueCoupe = new PanneauVC();
 
@@ -24,8 +25,8 @@ public class AffichageVC extends JFrame {
 		for (Ascenseur a : Controleur.getInstance().getAscenseurs()) {
 			a.action();
 		}
+
 		Controleur.getInstance().choisirAscenseur();
 		vueCoupe.repaint();
 	}
-
 }

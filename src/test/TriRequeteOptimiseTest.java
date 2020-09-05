@@ -38,5 +38,4 @@ public class TriRequeteOptimiseTest {
 			fail("Not yet implemented");
 		}
 	}
-
 }

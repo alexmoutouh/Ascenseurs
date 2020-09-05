@@ -21,16 +21,13 @@ import affichage.VueRequete;
 
 public class JeuDeDonnee {
 
-	// Donnees membres {
+	private boolean bloque = false;
 	private int nombreEtage = 6;
 	private int nombreAscenseur = 6;
-	private boolean bloque = false;
 	private EtatAscenseur etatSauvegarde = new EtatAscenseur();
 	private ArrayList<IAscenseur> ascenseurs = new ArrayList<IAscenseur>();
 	private TriRequete triReq = new TriRequeteOptimise();
 	private VueEnCoupe vueCoupe = new VueEnCoupe();
-
-	// } Donnees membres
 
 	public JeuDeDonnee(int choix) {
 		switch (choix) {
@@ -44,19 +41,17 @@ public class JeuDeDonnee {
 			initialiserJeuDeDonnee3();
 			break;
 		case 4:
-
 			break;
-
 		}
 	}
 
-	/************************************************************************
-	 * Le premier jeu de donnee on montre les options et la restauration de l
-	 * etat, apres que * l ascenseur soit bloquer
-	 ************************************************************************/
 	private void initialiserJeuDeDonnee1() {
+		/************************************************************************
+		 * Dans le premier jeu de donnee on montre les options et la restauration 
+		 * de l etat, apres que l'ascenseur ait ete bloque.
+		 ************************************************************************/
 
-		// l'ascenseur ultime possede les 2 options
+		// l'ascenseur ultime possede les 2 options.
 		IAscenseur ascenseurUltime = new Ascenseur(nombreEtage);
 		ascenseurUltime = new OptionVitesse(new OptionMusique(ascenseurUltime));
 		ascenseurs.add(ascenseurUltime);
@@ -65,20 +60,18 @@ public class JeuDeDonnee {
 			ascenseurs.get(i).enregisterObservateur(vueCoupe);
 		}
 
-		/**********************************************************************
-		 * La moitie des ascenseurs ont l option musique et l autre la vitesse *
-		 **********************************************************************/
-
+		/************************************************************************
+		 * La moitie des ascenseurs ont l'option musique et l'autre la vitesse. *
+		 ************************************************************************/
 		for (int i = nombreAscenseur / 2; i < nombreAscenseur; ++i) {
 			ascenseurs.add(new OptionVitesse(new Ascenseur(nombreEtage)));
 			ascenseurs.get(i).enregisterObservateur(vueCoupe);
 		}
 
-		/***************************************************************
-		 * On prepare plusieurs requetes pour le jeu de donnee. Ici peut importe
-		 * les requetes *
-		 ***************************************************************/
-
+		/***************************************************************************
+		 * On prepare plusieurs requetes pour le jeu de donnee. Ici peut importe les
+		 * requetes.
+		 ***************************************************************************/
 		Controleur.getInstance().getAscenseurs().get(0).creerRequeteInterne(2);
 		Controleur.getInstance().getAscenseurs().get(0).creerRequeteInterne(1);
 		Controleur.getInstance().getAscenseurs().get(2).creerRequeteInterne(5);
@@ -102,16 +95,17 @@ public class JeuDeDonnee {
 		iteration(13);
 	}
 
-	/*
-	 * Le deuxieme jeu de donnees sert de demonstration du choix d'attribution
-	 * des requetes externes par repartition equitable : l'ecart type ne sera
-	 * jamais superieur a 1
-	 */
 	private void initialiserJeuDeDonnee2() {
+		/******************************************************************************
+		 * Le deuxieme jeu de donnees sert de demonstration au choix d'attribution des
+		 * requetes externes par repartition equitable : l'ecart type ne sera jamais
+		 * superieur a 1.
+		 ******************************************************************************/
 		for (int i = 0; i < nombreAscenseur; ++i) {
 			ascenseurs.add(new Ascenseur(nombreEtage));
 			ascenseurs.get(i).enregisterObservateur(vueCoupe);
 		}
+
 		Controleur.getInstance().getAscenseurs().get(0).creerRequeteInterne(5);
 		Controleur.getInstance().creerRequeteExterne(1, Constante.KHaut());
 		Controleur.getInstance().creerRequeteExterne(5, Constante.KBas());
@@ -132,16 +126,17 @@ public class JeuDeDonnee {
 		// iteration(13); //sans trier
 	}
 
-	/*
-	 * Le troisieme jeu de donnees sert de demonstration du choix d'attribution
-	 * des requetes externes pour des deplacements intelligents : si un
-	 * ascenseur peut prendre au passage une requete, il le fait
-	 */
 	private void initialiserJeuDeDonnee3() {
+		/*******************************************************************************
+		 * Le troisieme jeu de donnees sert de demonstration au choix d'attribution des
+		 * requetes externes pour des deplacements intelligents : si un ascenseur peut
+		 * prendre au passage une requete, il le fait.
+		 *******************************************************************************/
 		for (int i = 0; i < nombreAscenseur; ++i) {
 			ascenseurs.add(new Ascenseur(nombreEtage));
 			ascenseurs.get(i).enregisterObservateur(vueCoupe);
 		}
+
 		Controleur.getInstance().getAscenseurs().get(0).creerRequeteInterne(5);
 		Controleur.getInstance().creerRequeteExterne(1, Constante.KHaut());
 		Controleur.getInstance().creerRequeteExterne(5, Constante.KBas());
@@ -150,8 +145,7 @@ public class JeuDeDonnee {
 		Controleur.getInstance().creerRequeteExterne(4, Constante.KHaut());
 		Controleur.getInstance().creerRequeteExterne(1, Constante.KBas());
 		Controleur.getInstance().creerRequeteExterne(1, Constante.KBas());
-		Controleur.getInstance().changerCritereChoix(
-				new ChoixMouvementMinimum());
+		Controleur.getInstance().changerCritereChoix(new ChoixMouvementMinimum());
 
 		Controleur.getInstance().choisirAscenseur();
 
@@ -162,21 +156,21 @@ public class JeuDeDonnee {
 		iteration(13);
 	}
 
-	/*******************************************************************
-	 * partie commune a tout les jeux de donnees sauf pour le blocage *
-	 *******************************************************************/
 	private void iteration(int nombreIteration) {
+		/*******************************************************************
+		 * Partie commune a tout les jeux de donnees sauf pour le blocage. *
+		 *******************************************************************/
 		Vue vueInteractiveInterne = new VueInteractiveInterne();
 		Vue vueInteractiveExterne = new VueInteractiveExterne();
 		Vue vueRequete = new VueRequete();
 		vueCoupe.actualiser();
 		int cptIteration = 0;
 
-		/********************************************
-		 * on donne a nombreIteration le nombre * necessaire pour que toute les
-		 * iterations * d un jeu de donnee soit afficher *
-		 ********************************************/
-		vueCoupe.affichage();// !!!!!!!!!!!!!!!!!!!!!!!!!!!
+		/**********************************************************************
+		 * On donne a nombreIteration le nombre necessaire pour que toutes les
+		 * iterations d un jeu de donnee soient affichees.
+		 **********************************************************************/
+		vueCoupe.affichage(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 		while (cptIteration != nombreIteration) {
 			vueInteractiveInterne.actualiser();
@@ -187,24 +181,20 @@ public class JeuDeDonnee {
 				System.out.println();
 			}
 
-			/***************************************
-			 * seulement pour le 1er jeu de donnee *
-			 ***************************************/
-
+			/****************************************
+			 * Seulement pour le 1er jeu de donnee. *
+			 ****************************************/
 			if (bloque) {
 				if (cptIteration == 4) {
-					etatSauvegarde.addMemento(Controleur.getInstance()
-							.getAscenseurs().get(2).sauverMemento());
+					etatSauvegarde.addMemento(Controleur.getInstance().getAscenseurs().get(2).sauverMemento());
 					Controleur.getInstance().getAscenseurs().get(2).bloquer();
 				} else if (cptIteration == 7) {
-					Controleur.getInstance().getAscenseurs().get(2)
-							.debloquer(etatSauvegarde.getMemento());
+					Controleur.getInstance().getAscenseurs().get(2).debloquer(etatSauvegarde.getMemento());
 				}
 			}
 
-			vueCoupe.affichage();// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			vueCoupe.affichage(); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			++cptIteration;
 		}
-
 	}
 }

@@ -34,8 +34,5 @@ public class ChoixMouvementMinimumTest {
 		if (a1.getRequetes().size() != 0 || a2.getRequetes().size() != 1 || a3.getRequetes().size() != 0) {
 			fail("11111");
 		}
-
-		
 	}
-
 }

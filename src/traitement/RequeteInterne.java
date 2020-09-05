@@ -2,15 +2,7 @@ package traitement;
 
 public class RequeteInterne implements Requete {
 
-	// Donnees membres{
-
-	/**************************************************************************
-	 * direction pourra prendre les valeurs KMonter et KDescendre (avec
-	 * conventions de nommage java) stockees dans la classe Constante
-	 **************************************************************************/
 	private int etageDeLaRequete;
-
-	// }Donnees membres
 
 	public RequeteInterne(int etageDeLaRequete) {
 		super();

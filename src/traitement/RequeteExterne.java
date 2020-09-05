@@ -2,16 +2,8 @@ package traitement;
 
 public class RequeteExterne implements Requete {
 
-	// Donnees membres{
-
 	private int etageDeLaRequete;
-	/**************************************************************************
-	 * direction pourra prendre les valeurs KMonter et KDescendre (avec
-	 * conventions de nommage java) stockees dans la classe Constante
-	 **************************************************************************/
-	private String direction;
-
-	// }Donnees membres
+	private String direction; // Constant.KMonter ou Constante.KDescendre
 
 	public RequeteExterne(int etageDeLaRequete, String direction) {
 		super();
@@ -29,8 +21,7 @@ public class RequeteExterne implements Requete {
 
 	@Override
 	public String toString() {
-		return "RequeteExterne [etageDeLaRequete=" + etageDeLaRequete
-				+ ", direction=" + direction + "]";
+		return "RequeteExterne [etageDeLaRequete=" + etageDeLaRequete + ", direction=" + direction + "]";
 	}
 
 	@Override

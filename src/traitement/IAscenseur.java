@@ -12,8 +12,8 @@ public interface IAscenseur {
 
 	public void notifierObservateur();
 
-	/*
-	 * getter revoyant juste l'instance d'ascenseur. Necessaire pour pouvoir
+	/**
+	 * Getter revoyant juste l'instance d'ascenseur. Necessaire pour pouvoir
 	 * remonter jusqu a l'objet decore dans les options. Sa principale utilite
 	 * apparait lors de l'utilisation d'un TriRequete
 	 */

@@ -3,7 +3,7 @@ package traitement;
 public interface ChoixAscenseur {
 
 	/*
-	 * methode de choix d'attribution des requetes au ascenseurs
+	 * Choisit l'attribution des requetes aux ascenseurs.
 	 */
 	public void choisir();
 }

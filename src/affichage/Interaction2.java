@@ -2,7 +2,6 @@ package affichage;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -13,16 +12,15 @@ import javax.swing.JTextField;
 
 import traitement.Ascenseur;
 import traitement.Controleur;
-import traitement.Requete;
 import traitement.RequeteInterne;
 import traitement.TriRequete;
 import traitement.TriRequeteOptimise;
 
 public class Interaction2 extends JFrame implements ActionListener {
 
-	private int nombreAscenseur;
-	private int nombreEtage;
+	private static final long serialVersionUID = 1L;
 
+	private int nombreAscenseur;
 	private AffichageVC affich;
 	private AffichageVR requetes = new AffichageVR();
 
@@ -41,8 +39,6 @@ public class Interaction2 extends JFrame implements ActionListener {
 	public Interaction2(int nombreAscenseur, int nombreEtage) {
 
 		this.nombreAscenseur = nombreAscenseur;
-		this.nombreEtage = nombreEtage;
-
 		this.affich = new AffichageVC(nombreAscenseur * 60, nombreEtage * 70);
 
 		this.setTitle("IHM interface");
@@ -79,7 +75,7 @@ public class Interaction2 extends JFrame implements ActionListener {
 	}
 
 	public static void trier(Ascenseur ascenseur) {
-		triReq.trier(ascenseur); // appel de l'algo de sélection d'ascenseur
+		triReq.trier(ascenseur); // appel de l'algo de selection d'ascenseur
 	}
 
 	public static void changerTri(TriRequete typeTri) {
@@ -95,59 +91,48 @@ public class Interaction2 extends JFrame implements ActionListener {
 
 		if (e.getSource() == externe) {
 			try {
-				int etageRequeteExterne = Integer.parseInt(externeEtage
-						.getText());
+				int etageRequeteExterne = Integer.parseInt(externeEtage.getText());
 				String direction = externeDir.getText();
 
-				if (etageRequeteExterne <= Controleur.getInstance()
-						.getAscenseurs().get(0).getNombreEtage()
+				if (etageRequeteExterne <= Controleur.getInstance().getAscenseurs().get(0).getNombreEtage()
 						&& etageRequeteExterne >= 0) {
 					if (direction.equals("haut") || direction.equals("bas")) {
-						Controleur.getInstance().creerRequeteExterne(
-								etageRequeteExterne, direction);
+						Controleur.getInstance().creerRequeteExterne(etageRequeteExterne, direction);
 						Controleur.getInstance().choisirAscenseur();
-						for (Ascenseur as : Controleur.getInstance()
-								.getAscenseurs()) {
+						for (Ascenseur as : Controleur.getInstance().getAscenseurs()) {
 							trier(as);
-						}// on effectue un nouveau tri
+						} // on effectue un nouveau tri
 					} else {
-						PopUp msg = new PopUp("Direction errone");
+						new PopUp("Direction errone");
 					}
 				} else {
-					PopUp msg = new PopUp("Etage inconnu");
+					new PopUp("Etage inconnu");
 				}
 			} catch (NumberFormatException ex) {
-				PopUp msg = new PopUp("Entrez seulement des nombres");
+				new PopUp("Entrez seulement des nombres");
 			}
 		}
 
 		if (e.getSource() == interne) {
 			try {
-				int etageRequeteInterne = Integer.parseInt(interneEtage
-						.getText());
+				int etageRequeteInterne = Integer.parseInt(interneEtage.getText());
 				int numeroAscenseur = Integer.parseInt(interneAsc.getText());
 
-				if (etageRequeteInterne <= Controleur.getInstance()
-						.getAscenseurs().get(0).getNombreEtage()
+				if (etageRequeteInterne <= Controleur.getInstance().getAscenseurs().get(0).getNombreEtage()
 						&& etageRequeteInterne >= 0) {
 					if (numeroAscenseur <= nombreAscenseur) {
-						Controleur
-								.getInstance()
-								.getAscenseurs()
-								.get(numeroAscenseur - 1)
-								.ajouterRequete(
-										new RequeteInterne(etageRequeteInterne));
-						trier(Controleur.getInstance().getAscenseurs()
-								.get(numeroAscenseur - 1));
+						Controleur.getInstance().getAscenseurs().get(numeroAscenseur - 1)
+								.ajouterRequete(new RequeteInterne(etageRequeteInterne));
+						trier(Controleur.getInstance().getAscenseurs().get(numeroAscenseur - 1));
 
 					} else {
-						PopUp msg = new PopUp("Numero ascenseur inconnu");
+						new PopUp("Numero ascenseur inconnu");
 					}
 				} else {
-					PopUp msg = new PopUp("Etage errone");
+					new PopUp("Etage errone");
 				}
 			} catch (NumberFormatException ex) {
-				PopUp msg = new PopUp("Entrez seulement des nombres");
+				new PopUp("Entrez seulement des nombres");
 			}
 
 		}

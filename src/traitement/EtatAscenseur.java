@@ -1,6 +1,7 @@
 package traitement;
 
 public class EtatAscenseur {
+
 	private Memento etatSauves = null;
 
 	public void addMemento(Memento m) {

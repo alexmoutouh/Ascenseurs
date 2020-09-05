@@ -8,7 +8,7 @@ public class Constante {
 	private static String KBloquer = "bloqu�";
 	private static String KHaut = "haut";
 	private static String KBas = "bas";
-	
+
 	public static String KHaut() {
 		return KHaut;
 	}
